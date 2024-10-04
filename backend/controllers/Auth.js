@@ -6,11 +6,11 @@ import bcrypt from 'bcryptjs'
 const Register = async (req, res) => {
     try {
         const {FullName,email,password}=req.body
-        // Upload the image to Cloudinary
+
         const imagePath = req.file.filename;
-        // const cloudinaryResult = await FileUploadeToColoudinary(imagePath, 'user_profiles');
+
           console.log(imagePath)
-        // Create a new user with the uploaded image URL
+    
         const existUser= await UserModel.findOne({email})
         if (existUser) {
             return res.status(301).json({success:false,message:"User Already Exist Please Login"})
@@ -23,11 +23,10 @@ const Register = async (req, res) => {
             profile: imagePath,
         });
 
-        // Save the user to the database
+      
         await newUser.save();
 
-        // // Remove the image from the local directory after uploading to Cloudinary
-        // fs.unlinkSync(imagePath);
+
 
         res.status(201).json({success:true, message: 'User registered successfully',user:newUser});
     } catch (error) {
@@ -70,13 +69,13 @@ const Login = async (req, res) => {
 
 const Logout=async(req,res)=>{
     try {
-        // Clear the token cookie
+        
         res.clearCookie('token');
 
-        // Return success message
+    
         res.status(200).json({ message: "Logout successful" });
     } catch (error) {
-        // Handle error
+    
         console.error("Error logging out:", error);
         res.status(500).json({ message: "Internal Server Error" });
     }

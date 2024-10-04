@@ -19,7 +19,9 @@ const UserSchema = new mongoose.Schema(
       enum: ["admin", "user"],
       default: "user",
     },
-  },{ timestamps: true })
+  },
+  { timestamps: true }
+);
 
 const UserModel = mongoose.model("Users", UserSchema);
 
